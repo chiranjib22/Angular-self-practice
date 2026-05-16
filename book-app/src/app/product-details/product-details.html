@@ -1,0 +1,15 @@
+<div class="product">
+      <div class="product-details">
+        <img [src]="`/books/${product.imageName}`" [alt]="product.name" />
+        <div class="product-info">
+          <div class="name">{{product.name}}</div>
+          <div class="description">{{product.description}}</div>
+          <div class="category">Book Type: {{product.category}}</div>
+        </div>
+      </div>
+      <div class="price">
+        <div [ngClass]="{'strike-through':product.discount > 0}">{{product.price | currency: 'BDT' : '৳' }}</div>
+        <div class="discount-price">{{(product.price - product.discount * product.price) | currency: 'BDT' : '৳'}}</div>
+        <button [disabled]="IsDisable" (click)="onBuy(product)" class="cta">Buy</button>
+      </div>
+</div>
