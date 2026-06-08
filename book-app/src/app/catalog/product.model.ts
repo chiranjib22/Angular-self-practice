@@ -195,4 +195,4 @@ let products: IProduct[] = [
       price: 34.99,
       discount: 0.1,
     },
-  ];
+];
