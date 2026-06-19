@@ -11,6 +11,7 @@ import { CurrencyPipe, NgClass } from '@angular/common';
 })
 export class ProductDetails {
   IsDisable: boolean = false;
+
   @Input() product!: IProduct;
 
   @Output() buyClicked = new EventEmitter<IProduct>();
