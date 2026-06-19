@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { Cart } from '../services/cart';
 import { IProduct } from '../catalog/product.model';
 import { RouterLink, RouterLinkActive } from '@angular/router';
@@ -16,14 +16,20 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   //   `
   // ]
   styleUrl: './header.scss',
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class Header {
-  cartItems!:IProduct[]
+  cartItems!: IProduct[];
+  isDark: boolean = false;
 
-  constructor(private cartService:Cart) {
+  constructor(private cartService: Cart) {
     this.cartItems = this.cartService.getCartItems();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ChangeAppTheme() {
+    this.isDark = !this.isDark;
+    document.body.classList.toggle('dark', this.isDark);
   }
 }

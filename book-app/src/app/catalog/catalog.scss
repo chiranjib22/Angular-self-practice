@@ -90,3 +90,8 @@
 .discount-price {
   color: green;
 }
+
+:host-context(.dark) {
+  display: block;
+  background-color: gray;
+}

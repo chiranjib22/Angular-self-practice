@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './home.scss',
 })
 export class Home implements OnInit {
-  constructor(){
+  constructor() {
     //console.log('Home component constructor');
   }
 
