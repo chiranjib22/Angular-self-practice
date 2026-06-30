@@ -2,11 +2,14 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Book } from './book.model';
 import { BookService } from '../services/book.service';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { NgTemplateOutlet } from '@angular/common';
+import { delay } from 'rxjs';
+import { Highlight } from '../directives/highlight';
+import { Show } from '../directives/show';
 
 @Component({
   selector: 'book-book-list',
-  imports: [RouterLink, DatePipe],
+  imports: [RouterLink, NgTemplateOutlet, Highlight, Show],
 
   templateUrl: './book-list.html',
   styleUrl: './book-list.scss',
@@ -20,10 +23,13 @@ export class BookList implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.bookService.getAllBooks().subscribe((books) => {
-      this.books = books;
-      this.cdr.detectChanges();
-    });
+    this.bookService
+      .getAllBooks()
+      .pipe(delay(5000))
+      .subscribe((books) => {
+        this.books = books;
+        this.cdr.detectChanges();
+      });
   }
 
   get topRatedBooks(): Book[] {

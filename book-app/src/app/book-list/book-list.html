@@ -4,25 +4,15 @@
   <h2>Top Rated Books</h2>
   <table>
     <thead>
-      <tr>
-        <th>Name</th>
-        <th>Author</th>
-        <th>Category</th>
-        <th>Rating</th>
-      </tr>
+      <ng-container *ngTemplateOutlet="bookTableHeader"></ng-container>
     </thead>
     <tbody>
-      @for (book of topRatedBooks; track book.id) {
-        <tr [routerLink]="['/books/edit/reactive', book.id]">
-          <td>{{ book.name }}</td>
-          <td>{{ book.author }}</td>
-          <td>{{ book.category }}</td>
-          <td>{{ book.rating }} ★</td>
-        </tr>
+      @for (book of topRatedBooks; track book.id; let i = $index) {
+        <ng-container
+          *ngTemplateOutlet="bookRow; context: { $implicit: book, index: i }"
+        ></ng-container>
       } @empty {
-        <tr>
-          <td class="center" colspan="4">No top-rated books yet</td>
-        </tr>
+        <ng-container *ngTemplateOutlet="noDataFound"></ng-container>
       }
     </tbody>
   </table>
@@ -30,26 +20,47 @@
   <h2>All Books</h2>
   <table>
     <thead>
-      <tr>
-        <th>Name</th>
-        <th>Author</th>
-        <th>Category</th>
-        <th>Published</th>
-      </tr>
+      <ng-container *ngTemplateOutlet="bookTableHeader"></ng-container>
     </thead>
     <tbody>
-      @for (book of books; track book.id) {
-        <tr [routerLink]="['/books/edit/reactive', book.id]">
-          <td>{{ book.name }}</td>
-          <td>{{ book.author }}</td>
-          <td>{{ book.category }}</td>
-          <td>{{ book.publishedYear | date: 'yyyy' }}</td>
-        </tr>
+      @for (book of books; track book.id; let i = $index) {
+        <ng-container
+          *ngTemplateOutlet="bookRow; context: { $implicit: book, index: i }"
+        ></ng-container>
       } @empty {
-        <tr>
-          <td class="center" colspan="4">No books found</td>
-        </tr>
+        <ng-container *ngTemplateOutlet="noDataFound"></ng-container>
       }
     </tbody>
   </table>
 </div>
+
+<ng-template #bookTableHeader>
+  <tr>
+    <th>Name</th>
+    <th>Author</th>
+    <th>Category</th>
+    <th>Rating</th>
+  </tr>
+</ng-template>
+
+<ng-template #noDataFound>
+  <tr>
+    <td class="center" colspan="4">No Books Found Yet!!</td>
+  </tr>
+</ng-template>
+
+<ng-template #bookRow let-book let-index="index">
+  <tr
+    bookHighlight
+    #bookHighlightTemplateRef="bookHighlight"
+    [rating]="book.rating"
+    [routerLink]="['/books/edit/reactive', book.id]"
+  >
+    <td (click)="bookHighlightTemplateRef.externalUse()">{{ book.name }}</td>
+    <td>{{ book.author }}</td>
+    <td>{{ book.category }}</td>
+    <td>{{ book.rating }} ★</td>
+  </tr>
+</ng-template>
+
+<div *bookShow="true">ngIf directive</div>
