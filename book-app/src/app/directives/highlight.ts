@@ -3,6 +3,9 @@ import { Directive, ElementRef, Input, input, OnInit } from '@angular/core';
 @Directive({
   selector: '[bookHighlight]',
   exportAs: 'bookHighlight',
+  host: {
+    '(click)': 'onRowClick($event)',
+  },
 })
 export class Highlight implements OnInit {
   @Input() rating = 0;
@@ -10,6 +13,10 @@ export class Highlight implements OnInit {
 
   ngOnInit(): void {
     this.applyStyle();
+  }
+
+  onRowClick(event: MouseEvent) {
+    console.log(event);
   }
 
   externalUse() {
